@@ -18,7 +18,14 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
-// ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
-require("./error-handling")(app);
+const authRoutes = require("./routes/auth.routes");
+app.use("/auth", authRoutes);
+
+const dogsRoutes = require("./routes/dogs.routes");
+app.use("/dogs", dogsRoutes);           
+
+/*const fosterRoutes = require("./routes/foster.routes");
+app.use("/foster", fosterRoutes);  */
+
 
 module.exports = app;
