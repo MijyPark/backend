@@ -30,7 +30,7 @@ router.post("/login", (req, res) => {
 
     if(bcryptjs.compareSync(req.body.password, potentialUser.password)) {
 
-      const authToken = jwt.sign( {userId:potentialUser._id}, process.env.TOKEN_SECRET, {
+      const authToken = jwt.sign( {userId:potentialUser._id}, 1234, {
         algorithm: "HS256",
         expiresIn: "6h",
       })
