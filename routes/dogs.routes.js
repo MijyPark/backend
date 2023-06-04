@@ -1,10 +1,8 @@
-require('dotenv').config()
-
+require("dotenv").config();
 const express = require('express')
 const router = require("express").Router();
 const Dog = require("../models/Dog.model");
 const uploader = require("../middleware/cloudinary.config");
-const mongoose = require("mongoose");
 const multer = require('multer')
 
 

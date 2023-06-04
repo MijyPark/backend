@@ -1,94 +1,50 @@
+require('dotenv').config()
 const router = require("express").Router();
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
-require('dotenv').config()
 
 
-
-
-router.post("/signup", (req, res, next) => {
-
-  const salt = bcrypt.genSaltSync(13);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-
-  const {username, email, password} = req.body;
-
-  if (username === "" || email === "" || password === "") {
-    res.status(400).json({ message: "Provide all information" });
-    return;
-  }
-
-  User.findOne({ username })
-    .then((foundUser) => {
-      if (foundUser) {
-        res.status(400).json({ message: "User already exists." });
-        return;
-      }
-
-      return User.create({ username, email, password: hashedPassword });
-    })
-    .then((createdUser) => {
-      const {username, email, _id } = createdUser;
-
-     
-      const user = { username, email, _id };
-
-      res.status(201).json({ user: user });
-    })
-    .catch((err) => next(err));
+router.get("/", (req, res, next) => {
+  res.json("Auth good in here");
 });
 
+router.post("/signup", async (req, res) => {
 
-router.post("/login", (req, res, next) => {
-  const { username, password } = req.body;
-
-
-  if (username === "" || password === "") {
-    res.status(400).json({ message: "Provide username and password." });
-    return;
+  const salt = bcryptjs.genSaltSync(13);
+  const passwordHash = bcryptjs.hashSync(req.body.password, salt);
+  try { 
+    await User.create({ email: req.body.email, password: passwordHash });
+    res.status(201).json({ messsage: 'Account created' })
+  } catch(err) {
+      console.log(error)  
   }
-
- 
-  User.findOne({ username })
-    .then((foundUser) => {
-      if (!foundUser) {
-     
-        res.status(401).json({ message: "User not found." });
-        return;
-      }
-
-      const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
-
-      if (passwordCorrect) {
-        const { _id, username, email} = foundUser;
-
-      
-        const payload = { _id, username, email };
-
-
-        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-          algorithm: "HS256",
-          expiresIn: "6h",
-        });
-
- 
-        res.status(200).json({ authToken: authToken });
-      } else {
-        res.status(401).json({ message: "Unable to authenticate the user" });
-      }
-    })
-    .catch((err) => next(err)); 
   })
 
-router.get("/verify", isAuthenticated, (req, res, next) => {
- 
-  console.log(`req.payload`, req.payload);
 
- 
-  res.status(200).json(req.payload);
- });
+router.post("/login", (req, res) => {
+  const  potentialUser = await.Uer.findOne({ email:req.boy.email})
+  if(potentialUser) {
+
+    if(bcryptjs.compareSync(req.body.password, potentialUser.password)) {
+
+      const authToken = jwt.sign( {userId:potentialUser._id}, process.env.TOKEN_SECRET, {
+        algorithm: "HS256",
+        expiresIn: "6h",
+      })
+      res.json(authToken)
+    } else {
+
+    }
+  } else {
+  }
+})
+   
+router.get("/verify", isAuthenticated, async(req, res) => {
+  const user= await User.findById(req.playload.userId)
+  res.json({message:'User is authenticated', user})
+})
 
 
 module.exports = router
