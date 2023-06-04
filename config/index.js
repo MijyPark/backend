@@ -1,10 +1,11 @@
 
+const mongoose = require("mongoose");
+
 const express = require("express");
 
 const logger = require("morgan");
 
 const cookieParser = require("cookie-parser");
-
 
 const cors = require("cors");
 
@@ -18,9 +19,11 @@ module.exports = (app) => {
 
   app.use(
     cors({
+      credentials: true,
       origin: [FRONTEND_URL]
     })
   );
+
 
 
   app.use(logger("dev"));

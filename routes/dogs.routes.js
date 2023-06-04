@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require('express')
 const router = require("express").Router();
@@ -7,7 +8,7 @@ const multer = require('multer')
 
 
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   try {
   const allDogs = await Dog.find({})
   res.status(200).json(allDogs)
@@ -16,7 +17,7 @@ router.get("/", async (req, res, next) => {
 }
 }) 
 
- router.post("/add", uploader.single("imageUrl"), async (req, res, next) => {
+ router.post("/", uploader.single("imageUrl"), async (req, res, next) => {
  
   const {name, age, info, location} = req.body;
   const image= req.file.path;
