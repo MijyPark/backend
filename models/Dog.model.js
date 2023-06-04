@@ -11,10 +11,15 @@ const dogSchema = new Schema(
     type: Number
           },
 
-    info: {
+    breed: {
         type: String,
      },
-    location: {
+
+    size: {
+      type: String,
+   },
+
+    info: {
       type: String,
      },
 

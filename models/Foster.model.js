@@ -7,7 +7,7 @@ const fosterSchema = new Schema(
     },
     
    family: {
-    type: String,   
+    type: Number,   
 
     },
     
@@ -15,12 +15,13 @@ const fosterSchema = new Schema(
       type: String,   
 
       },
-      
+    
     contact: {
     type: Number,
     },
+
     
-    desc: {
+    info: {
     type: String
    },
   

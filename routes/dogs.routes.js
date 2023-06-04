@@ -19,23 +19,23 @@ router.get("/", async (req, res) => {
 
  router.post("/", uploader.single("imageUrl"), async (req, res, next) => {
  
-  const {name, age, info, location} = req.body;
+  const {name, age, breed, size, info} = req.body;
   const image= req.file.path;
   try {
-    const newDog = await Dog.create({name, age, info, location, image})
+    const newDog = await Dog.create({name, age, breed, size, info, image})
     res.status(201).json(newDog)
   } catch(error) {
     console.log(error)
   }
 });
 
-router.put("/", (req, res) => {
+router.put("/:dogId", (req, res) => {
   const {_id, image} = req.body;
 
   Dog.findByIdAndUpdate(_id, { image }, {new: true})
     .then(updatedDog => {
       const {_id, name, age, info, location, image } = updatedDog
-      res.json({ updatedDog: {_id, name, age, info, location, image} })
+      res.json({ updatedDog: {_id, name, age, breed, size, info, image} })
     })
     .catch(err => console.error(err))
 

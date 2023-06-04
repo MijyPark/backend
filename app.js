@@ -21,6 +21,8 @@ app.use("/auth", authRoutes);
 const dogsRoutes = require("./routes/dogs.routes");
 app.use("/api/dogs", dogsRoutes);           
 
+const fostersRoutes = require("./routes/fosters.routes");
+app.use("/api/fosters", fostersRoutes);   
 
 require('./error-handling')(app)
 
