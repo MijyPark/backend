@@ -16,6 +16,7 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
+require("dotenv").config();
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 

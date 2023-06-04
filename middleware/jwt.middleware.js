@@ -2,7 +2,7 @@ require('dotenv').config()
 const { expressjwt: jwt } = require('express-jwt')
 
 const isAuthenticated = jwt({
-  secret: process.env.TOKEN_SECRET,
+  secret: 1234,
   algorithms: ['HS256'],
   requestProperty: 'playload',
   getToken: getTokenFromHeaders,

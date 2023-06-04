@@ -7,7 +7,7 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
 const router = require("express").Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
   res.json("Auth good in here");
 });
 
