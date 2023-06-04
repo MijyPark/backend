@@ -1,5 +1,3 @@
-// ℹ️ Gets access to environment variables/settings
-// https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
 // ℹ️ Connects to the database
@@ -26,6 +24,6 @@ app.use("/dogs", dogsRoutes);
 
 /*const fosterRoutes = require("./routes/foster.routes");
 app.use("/foster", fosterRoutes);  */
-
+require('./error-handling')(app)
 
 module.exports = app;

@@ -1,10 +1,11 @@
 require('dotenv').config()
-const router = require("express").Router();
+
 const bcryptjs = require('bcryptjs');
-const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
+const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
+const router = require("express").Router();
 
 router.get("/", (req, res, next) => {
   res.json("Auth good in here");
